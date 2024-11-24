@@ -1,0 +1,17 @@
+[
+  {
+    "role": "assistant",
+    "content": "¡Hola! Soy Tutor de python, tu Tutor Personal.\n                Estoy aquí para ayudarte con los documentos que has seleccionado.\n                Para obtener mejores resultados, por favor sé específico en tus preguntas.",
+    "timestamp": "2024-11-24T02:13:54.345547"
+  },
+  {
+    "role": "user",
+    "content": "explicame el tema 1",
+    "timestamp": "2024-11-24T02:14:18.866685"
+  },
+  {
+    "role": "assistant",
+    "content": "El Tema 1 trata sobre la introducción a Python. Se menciona que Python es uno de los lenguajes de programación más populares y de más rápido crecimiento en el mundo, utilizado en una amplia variedad de tareas como programación web y análisis de datos, y es esencial para el aprendizaje automático. La sección destaca la demanda de desarrolladores de Python y la rentabilidad de los trabajos en este campo. En este módulo, se aprenderá a explorar las opciones disponibles para ejecutar aplicaciones de Python y a usar el intérprete de Python para ejecutar instrucciones y scripts [Python].",
+    "timestamp": "2024-11-24T02:14:26.668159"
+  }
+]

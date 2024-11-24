@@ -1,4 +1,4 @@
 Yachani_app
 .venv
-data
 old
+.env

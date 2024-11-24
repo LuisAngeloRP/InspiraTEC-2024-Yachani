@@ -1,0 +1,44 @@
+{
+  "categories": {
+    "Matemáticas": [
+      "Álgebra",
+      "Cálculo",
+      "Geometría",
+      "Estadística"
+    ],
+    "Ciencias": [
+      "Física",
+      "Química",
+      "Biología",
+      "Astronomía"
+    ],
+    "Programación": [
+      "Python",
+      "JavaScript",
+      "Java",
+      "Web Development"
+    ],
+    "Idiomas": [
+      "Inglés",
+      "Español",
+      "Francés",
+      "Alemán"
+    ],
+    "Historia": [
+      "Historia Mundial",
+      "Historia del Arte",
+      "Arqueología"
+    ],
+    "Literatura": [
+      "Narrativa",
+      "Poesía",
+      "Teatro",
+      "Ensayo"
+    ]
+  },
+  "category_counts": {
+    "Historia": 1,
+    "Ciencias": 1,
+    "Programación": 1
+  }
+}

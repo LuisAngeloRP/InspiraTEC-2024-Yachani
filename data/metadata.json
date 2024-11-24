@@ -1,0 +1,20 @@
+{
+  "4fb0fa6246dc5cfef0cb12a5616ef3217ecc21698443c547923dd6256710f9e4": {
+    "title": "Python",
+    "category": "Programación",
+    "subcategory": "Python",
+    "type": "Paper Académico",
+    "level": "Experto",
+    "language": "Español",
+    "author": "ABC",
+    "year": 2024,
+    "tags": [
+      "ABC"
+    ],
+    "description": "ASDA",
+    "hash": "4fb0fa6246dc5cfef0cb12a5616ef3217ecc21698443c547923dd6256710f9e4",
+    "vectorstore_path": "data/processed_docs/Python",
+    "original_path": "data/processed_docs/Python/original_Python.pdf",
+    "processed_date": "2024-11-23T02:51:54.038146"
+  }
+}

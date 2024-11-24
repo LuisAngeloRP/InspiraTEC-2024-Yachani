@@ -1,0 +1,18 @@
+{
+  "agent_20241123_025215": {
+    "name": "Tutor de python",
+    "role": "Tutor Personal",
+    "style": "Balanceado",
+    "detail_level": "Moderado",
+    "temperature": 0.7,
+    "max_tokens": 2048,
+    "context_window": 5,
+    "docs": [
+      {
+        "title": "Python",
+        "hash": "4fb0fa6246dc5cfef0cb12a5616ef3217ecc21698443c547923dd6256710f9e4"
+      }
+    ],
+    "created_at": "2024-11-23T02:52:15.913929"
+  }
+}

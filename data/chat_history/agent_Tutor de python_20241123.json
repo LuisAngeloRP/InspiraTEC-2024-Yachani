@@ -1,0 +1,17 @@
+[
+  {
+    "role": "assistant",
+    "content": "¡Hola! Soy Tutor de python, tu Tutor Personal.\n                Estoy aquí para ayudarte con los documentos que has seleccionado.\n                Para obtener mejores resultados, por favor sé específico en tus preguntas.",
+    "timestamp": "2024-11-23T03:07:16.644132"
+  },
+  {
+    "role": "user",
+    "content": "hola",
+    "timestamp": "2024-11-23T03:07:25.589560"
+  },
+  {
+    "role": "assistant",
+    "content": "Hola, para empezar a utilizar Python, puedes comenzar con algo sencillo como imprimir un mensaje en pantalla. Para hacer esto, usa el comando `print('Hello World!')`. Esta instrucción imprimirá el texto Hello World! en la consola. Python es un lenguaje con una sintaxis muy simple y fácil de aprender, lo cual facilita la escritura y comprensión de código. Además, Python se puede utilizar en una amplia gama de aplicaciones, desde automatizar tareas hasta desarrollar aplicaciones web y modelos de Machine Learning. Para probar rápidamente fragmentos de código o aprender, puedes utilizar el REPL (Read-Eval-Print Loop) de Python, que te permite escribir comandos y ver los resultados inmediatamente [Documento].",
+    "timestamp": "2024-11-23T03:07:32.931685"
+  }
+]

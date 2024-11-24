@@ -1,4 +1,3 @@
-# pages/3_💬_chat.py
 import streamlit as st
 from langchain_openai import ChatOpenAI
 from langchain.agents import initialize_agent
@@ -48,6 +47,17 @@ def show_chat_message(message: Dict, show_timestamp: bool = True):
 def get_agent_id(config: Dict) -> str:
     """Genera un ID único para el agente basado en su configuración."""
     return f"agent_{config['name']}_{datetime.now().strftime('%Y%m%d')}"
+
+def get_recent_history(messages: List[Dict], max_messages: int = 5) -> str:
+    """Obtiene el historial reciente de mensajes formateado."""
+    recent_messages = messages[-max_messages:] if messages else []
+    formatted_history = []
+    
+    for msg in recent_messages:
+        role = "Human" if msg["role"] == "user" else "Assistant"
+        formatted_history.append(f"{role}: {msg['content']}")
+    
+    return "\n".join(formatted_history)
 
 def main():
     st.title("💬 Chat Educativo")
@@ -100,13 +110,12 @@ def main():
             # Gestión de historiales
             st.markdown("### 💾 Gestión de Historial")
             
-            # Cargar historiales existentes
             histories = []
             history_dir = os.path.join("data", "chat_history")
             if os.path.exists(history_dir):
                 for file in os.listdir(history_dir):
                     if file.startswith(f"agent_{config['name']}_") and file.endswith(".json"):
-                        histories.append(file[:-5])  # Remover .json
+                        histories.append(file[:-5])
             
             if histories:
                 selected_history = st.selectbox(
@@ -118,6 +127,8 @@ def main():
                 if selected_history != "Actual":
                     if st.button("📂 Cargar Historial"):
                         st.session_state.messages = load_agent_history(selected_history)
+                        if 'agent' in st.session_state:
+                            del st.session_state.agent
                         st.rerun()
             
             # Opciones de historial
@@ -151,7 +162,6 @@ def main():
 
         # Input del usuario
         if prompt := st.chat_input("¿Qué deseas saber?"):
-            # Agregar timestamp al mensaje
             user_message = {
                 "role": "user",
                 "content": prompt,
@@ -177,13 +187,11 @@ def main():
                                     results = []
                                     
                                     for vs in config['vectorstores']:
-                                        # Realizar búsqueda
                                         docs = vs['retriever'].get_relevant_documents(query)
                                         for doc in docs:
                                             content = doc.page_content.strip()
                                             source = vs['title']
                                             
-                                            # Verificar si el contenido es nuevo
                                             if content not in [r.split(']:')[1].strip() for r in results]:
                                                 results.append(f"[{source}]: {content}")
                                     
@@ -202,32 +210,44 @@ def main():
                                 )
                             ]
 
+                            memory = ConversationBufferMemory(
+                                memory_key="chat_history",
+                                return_messages=True
+                            )
+
                             st.session_state.agent = initialize_agent(
                                 tools,
                                 llm,
                                 agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
                                 verbose=True,
                                 max_iterations=3,
-                                memory=ConversationBufferMemory(memory_key="chat_history"),
+                                memory=memory,
                                 handle_parsing_errors=True
                             )
 
-                        # Procesar consulta
-                        response = st.session_state.agent.run(
-                            f"""Actúa como {config['name']}, un {config['role']} con estilo {config['style'].lower()}.
-                            
-                            Consulta: {prompt}
-                            
-                            Instrucciones:
-                            1. Usa search_documents para encontrar información relevante
-                            2. Responde usando SOLO información de los documentos
-                            3. Cita las fuentes usando [Documento]
-                            4. Mantén un nivel de detalle {config['detail_level'].lower()}
-                            5. Si no encuentras información, sugiere cómo reformular la pregunta
-                            """
-                        )
+                        # Obtener historial reciente
+                        recent_history = get_recent_history(st.session_state.messages)
                         
-                        # Agregar timestamp a la respuesta
+                        # Procesar consulta con contexto
+                        prompt_text = f"""Actúa como {config['name']}, un {config['role']} con estilo {config['style'].lower()}.
+                        
+                        Historial reciente de la conversación:
+                        {recent_history}
+                        
+                        Consulta actual: {prompt}
+                        
+                        Instrucciones:
+                        1. Usa search_documents para encontrar información relevante
+                        2. Responde usando SOLO información de los documentos
+                        3. Cita las fuentes usando [Documento]
+                        4. Mantén un nivel de detalle {config['detail_level'].lower()}
+                        5. Si no encuentras información, sugiere cómo reformular la pregunta
+                        6. Ten en cuenta el contexto del historial reciente
+                        7. Mantén la coherencia con las respuestas anteriores
+                        """
+                        
+                        response = st.session_state.agent.run(prompt_text)
+                        
                         assistant_message = {
                             "role": "assistant",
                             "content": response,
@@ -248,10 +268,6 @@ def main():
                             "content": error_msg,
                             "timestamp": datetime.now().isoformat()
                         })
-
-        # Mantener historial manejable
-        if len(st.session_state.messages) > 15:
-            st.session_state.messages = st.session_state.messages[-15:]
 
 # Estilos CSS
 st.markdown("""
