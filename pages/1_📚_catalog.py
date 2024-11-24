@@ -47,7 +47,6 @@ def show_document_details(doc, is_full_view=True):
     """Muestra los detalles del documento con manejo seguro de campos."""
     base_info = f"""
     #### 📄 {get_safe_value(doc, 'title')}
-    - **Categoría:** {get_safe_value(doc, 'category')} / {get_safe_value(doc, 'subcategory')}
     - **Tipo:** {get_safe_value(doc, 'type')}
     - **Nivel:** {get_safe_value(doc, 'level')}
     """
@@ -104,15 +103,6 @@ def main():
             "Categoría",
             ["Todas"] + list(categories.keys())
         )
-        
-        if selected_category != "Todas":
-            subcategories = categories[selected_category]
-            selected_subcategory = st.selectbox(
-                "Subcategoría",
-                ["Todas"] + subcategories
-            )
-        else:
-            selected_subcategory = "Todas"
         
         selected_type = st.selectbox(
             "Tipo de Documento",
@@ -284,7 +274,6 @@ def main():
             if search_clicked or search_query:
                 filters = {
                     "category": selected_category,
-                    "subcategory": selected_subcategory,
                     "type": selected_type,
                     "level": selected_level,
                     "language": selected_language if selected_language != "Todos" else None,

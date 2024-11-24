@@ -14,5 +14,25 @@
       }
     ],
     "created_at": "2024-11-23T02:52:15.913929"
+  },
+  "agent_20241124_053033": {
+    "name": "Tutor sociolog\u00eda",
+    "role": "Tutor Personal",
+    "style": "Balanceado",
+    "detail_level": "Moderado",
+    "temperature": 0.7,
+    "max_tokens": 2048,
+    "context_window": 5,
+    "docs": [
+      {
+        "title": "Sociolog\u00eda La democracia",
+        "hash": "912b204394aa66dcd2ed392eb432c223ef9979701297fa45c825fee0a1c51b52"
+      },
+      {
+        "title": "Sociolog\u00eda - Clases Sociales en el Per\u00fa",
+        "hash": "c2f8c214cf9a059783cff6b68e6453bd267bb2e8024d2c964c290593357a3b7b"
+      }
+    ],
+    "created_at": "2024-11-24T05:30:33.096252"
   }
 }

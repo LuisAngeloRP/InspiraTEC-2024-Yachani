@@ -59,6 +59,8 @@ def get_recent_history(messages: List[Dict], max_messages: int = 5) -> str:
     
     return "\n".join(formatted_history)
 
+
+
 def main():
     st.title("💬 Chat Educativo")
 

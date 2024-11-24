@@ -238,16 +238,11 @@ def main():
                 help="Nombre descriptivo del documento"
             )
             
-            # Categoría y subcategoría
+            # Categoría
             categories = doc_manager.categories["categories"]
             category = st.selectbox(
                 "Categoría",
                 options=list(categories.keys())
-            )
-            
-            subcategory = st.selectbox(
-                "Subcategoría",
-                options=categories[category]
             )
             
             # Tipo y nivel
@@ -302,7 +297,6 @@ def main():
                 st.session_state.doc_metadata = {
                     "title": title,
                     "category": category,
-                    "subcategory": subcategory,
                     "type": doc_type,
                     "level": level,
                     "language": language,

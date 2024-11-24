@@ -94,7 +94,7 @@ def extract_pdf_content(pdf_path: str) -> List[Dict]:
 
 def display_content_viewer(pdf_path: str):
     """
-    Muestra el contenido del PDF en un formato de texto con navegación por páginas.
+    Muestra el contenido del PDF con navegación mejorada.
     """
     if not pdf_path or not os.path.exists(pdf_path):
         st.error("El archivo no se encuentra disponible.")
@@ -112,56 +112,116 @@ def display_content_viewer(pdf_path: str):
         st.error("No se pudo extraer el contenido del documento.")
         return
 
-    # Layout con dos columnas: índice y contenido
-    index_col, content_col = st.columns([0.3, 0.7])
+    # Inicializar página actual si no existe
+    if 'current_page' not in st.session_state:
+        st.session_state.current_page = 0
+
+    # Selector de estilo de navegación
+    nav_style = st.radio(
+        "Estilo de navegación",
+        options=["Flechas", "Índice horizontal"],
+        horizontal=True
+    )
+
+    # Contenedor para el contenido
+    content_container = st.container()
     
-    with index_col:
-        st.markdown("### 📑 Índice")
-        # Crear selectbox para navegación
-        page_options = [f"Página {page['page_num']}" for page in pages_content]
-        selected_page = st.radio(
-            "Seleccionar página",
-            options=range(len(pages_content)),
-            format_func=lambda x: f"Página {pages_content[x]['page_num']}\n{pages_content[x]['preview'][:50]}...",
-            label_visibility="collapsed"
-        )
-
-    with content_col:
-        st.markdown("### 📄 Contenido")
-        # Mostrar contenido de la página seleccionada
-        page_data = pages_content[selected_page]
+    # Navegación según el estilo seleccionado
+    if nav_style == "Flechas":
+        # Mostrar contenido
+        with content_container:
+            st.markdown(f"""
+            <div class="content-box">
+                <div class="page-header">
+                    <h4>Página {st.session_state.current_page + 1} de {len(pages_content)}</h4>
+                </div>
+                <div class="page-content">
+                    {pages_content[st.session_state.current_page]['content'].replace('\n', '<br>')}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
         
-        # Contenedor con estilo para el contenido
-        st.markdown(f"""
-        <div class="content-box">
-            <div class="page-header">
-                <h4>Página {page_data['page_num']} de {len(pages_content)}</h4>
-            </div>
-            <div class="page-content">
-                {page_data['content'].replace('\n', '<br>')}
-            </div>
-        </div>
+        # Navegación con flechas en la parte inferior
+        col1, col2, col3 = st.columns([1, 3, 1])
+        
+        with col1:
+            if st.button("← Anterior", disabled=st.session_state.current_page <= 0):
+                st.session_state.current_page -= 1
+                st.rerun()
+                
+        with col2:
+            # Barra de progreso
+            progress = (st.session_state.current_page + 1) / len(pages_content)
+            st.progress(progress)
+                
+        with col3:
+            if st.button("Siguiente →", disabled=st.session_state.current_page >= len(pages_content) - 1):
+                st.session_state.current_page += 1
+                st.rerun()
+    
+    else:  # Índice horizontal
+        # Crear índice horizontal con números de página
+        st.markdown("""
+        <div class="page-index">
+            <div class="index-scroll">
         """, unsafe_allow_html=True)
-
+        
+        # Dividir en grupos de 10 páginas
+        cols = st.columns(min(10, len(pages_content)))
+        for idx, col in enumerate(cols):
+            with col:
+                page_num = idx + 1
+                if st.button(
+                    f"{page_num}",
+                    key=f"page_{page_num}",
+                    disabled=st.session_state.current_page == idx,
+                    use_container_width=True
+                ):
+                    st.session_state.current_page = idx
+                    st.rerun()
+        
+        st.markdown("</div></div>", unsafe_allow_html=True)
+        
+        # Mostrar contenido
+        with content_container:
+            st.markdown(f"""
+            <div class="content-box">
+                <div class="page-header">
+                    <h4>Página {st.session_state.current_page + 1} de {len(pages_content)}</h4>
+                </div>
+                <div class="page-content">
+                    {pages_content[st.session_state.current_page]['content'].replace('\n', '<br>')}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 def get_document_info(vectorstores: List[Dict]) -> List[Dict]:
     """
-    Extrae solo la información necesaria de los vectorstores para el selector.
-    Asume que el PDF está en processed_docs/[AGENTE]/[AGENTE].pdf
+    Extrae información de los vectorstores para el selector.
+    La estructura es:
+    processed_docs/[NOMBRE_AGENTE]/[ARCHIVO].pdf
     """
+    # Obtener el nombre del agente de la configuración
+    agent_name = vectorstores[0]['title']  # Usamos el título como nombre del agente
     docs_info = []
-    for vs in vectorstores:
-        # El hash es el nombre del agente/carpeta
-        agent_folder = vs.get('hash', '')
-        # Construir la ruta al PDF usando el mismo nombre de carpeta para el archivo
-        pdf_path = os.path.join('processed_docs', agent_folder, f"{agent_folder}.pdf")
+    
+    # Directorio base donde están los PDFs del agente
+    agent_dir = os.path.join('data/processed_docs', agent_name)
+    
+    # Si el directorio existe, buscar los PDFs
+    if os.path.exists(agent_dir):
+        # Listar todos los PDFs en el directorio del agente
+        pdf_files = [f for f in os.listdir(agent_dir) if f.endswith('.pdf')]
         
-        docs_info.append({
-            'title': vs['title'],
-            'path': pdf_path,
-            'agent_folder': agent_folder
-        })
+        for pdf_file in pdf_files:
+            pdf_path = os.path.join(agent_dir, pdf_file)
+            docs_info.append({
+                'title': os.path.splitext(pdf_file)[0],  # Nombre del PDF sin extensión
+                'path': pdf_path,
+                'agent_name': agent_name
+            })
     
     return docs_info
+
 
 def main():
     st.title("📑 Vista Documento + Chat")
@@ -193,6 +253,9 @@ def main():
             docs_info = get_document_info(config['vectorstores'])
             
             if docs_info:
+                # Mostrar el nombre del agente
+                st.markdown(f"**🤖 Agente:** {docs_info[0]['agent_name']}")
+                
                 # Selector de documento
                 selected_doc = st.selectbox(
                     "Seleccionar documento",
@@ -207,17 +270,23 @@ def main():
                     else:
                         st.error(f"""
                         No se encontró el archivo PDF.
-                        Ruta esperada: {selected_doc['path']}
-                        Asegúrate de que existe el archivo: {selected_doc['agent_folder']}.pdf
-                        dentro de la carpeta: processed_docs/{selected_doc['agent_folder']}/
+                        Buscando en: {selected_doc['path']}
+                        
+                        Estructura esperada:
+                        processed_docs/
+                        └── {selected_doc['agent_name']}/
+                            └── [archivos PDF]
                         """)
             else:
-                st.warning("No hay documentos disponibles")
+                st.warning(f"""
+                No se encontraron documentos PDF.
+                Verifica que existan archivos PDF en la carpeta:
+                processed_docs/{config['vectorstores'][0]['title']}/
+                """)
                 
         except Exception as e:
             st.error(f"Error al cargar los documentos: {str(e)}")
-
-    # ... (resto del código del chat permanece igual)
+            st.write("Detalles:", str(e))
 
     # Columna del chat
     with chat_col:
@@ -350,26 +419,17 @@ def main():
                             "timestamp": datetime.now().isoformat()
                         })
 
-# Estilos CSS personalizados
+# Agregar estilos CSS adicionales
 st.markdown("""
 <style>
-    /* Contenedor de índice */
-    .index-container {
-        border-right: 1px solid #e0e0e0;
-        height: calc(100vh - 200px);
-        overflow-y: auto;
-        padding-right: 1rem;
-    }
-
-    /* Contenedor de contenido */
+    /* Contenedor principal */
     .content-box {
         background-color: white;
         border: 1px solid #e0e0e0;
         border-radius: 10px;
         padding: 1.5rem;
-        margin-bottom: 1rem;
-        height: calc(100vh - 250px);
-        overflow-y: auto;
+        margin: 1rem 0;
+        min-height: 500px;
     }
 
     /* Encabezado de página */
@@ -383,36 +443,65 @@ st.markdown("""
     .page-content {
         font-size: 1rem;
         line-height: 1.6;
+        text-align: justify;
+        padding: 1rem;
         white-space: pre-wrap;
     }
 
-    /* Radio buttons del índice */
-    .stRadio > label {
-        font-size: 0.9rem;
+    /* Navegación con flechas */
+    .stButton button {
+        width: 100%;
         padding: 0.5rem;
+    }
+
+    /* Índice horizontal */
+    .page-index {
+        background-color: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .index-scroll {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    /* Botones del índice */
+    .page-index button {
+        min-width: 40px;
+        height: 40px;
+        padding: 0.25rem;
         border-radius: 5px;
+        background-color: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        cursor: pointer;
     }
 
-    .stRadio > div[role="radiogroup"] > div {
-        margin-bottom: 0.5rem;
+    .page-index button:hover {
+        background-color: #e9ecef;
     }
 
-    /* Scroll personalizado */
-    .content-box::-webkit-scrollbar {
-        width: 8px;
+    .page-index button:disabled {
+        background-color: #1f77b4;
+        color: white;
+        border: none;
     }
 
-    .content-box::-webkit-scrollbar-track {
-        background: #f1f1f1;
+    /* Barra de progreso */
+    .stProgress {
+        margin-top: 0.5rem;
     }
 
-    .content-box::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 4px;
-    }
-
-    .content-box::-webkit-scrollbar-thumb:hover {
-        background: #555;
+    /* Contenedor del documento */
+    .doc-viewer {
+        height: calc(100vh - 200px);
+        overflow-y: auto;
+        padding: 1rem;
     }
 </style>
 """, unsafe_allow_html=True)

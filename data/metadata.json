@@ -2,7 +2,6 @@
   "4fb0fa6246dc5cfef0cb12a5616ef3217ecc21698443c547923dd6256710f9e4": {
     "title": "Python",
     "category": "Programación",
-    "subcategory": "Python",
     "type": "Paper Académico",
     "level": "Experto",
     "language": "Español",
@@ -16,5 +15,149 @@
     "vectorstore_path": "data/processed_docs/Python",
     "original_path": "data/processed_docs/Python/original_Python.pdf",
     "processed_date": "2024-11-23T02:51:54.038146"
+  },
+  "c2f8c214cf9a059783cff6b68e6453bd267bb2e8024d2c964c290593357a3b7b": {
+    "title": "Sociología - Clases Sociales en el Perú",
+    "category": "Historia",
+    "type": "Material de Curso",
+    "level": "Intermedio",
+    "language": "Español",
+    "author": "Fernando Ayala",
+    "year": 2024,
+    "tags": [],
+    "description": "",
+    "hash": "c2f8c214cf9a059783cff6b68e6453bd267bb2e8024d2c964c290593357a3b7b",
+    "vectorstore_path": "data/processed_docs/Sociología - Clases Sociales en el Perú",
+    "original_path": "data/processed_docs/Sociología - Clases Sociales en el Perú/original_Sociología - Clases Sociales en el Perú.pdf",
+    "processed_date": "2024-11-24T03:19:21.591710"
+  },
+  "a7b9c8d6e5f4321098765432109876543210987654321098765432109876543210": {
+    "title": "Introducción a la Inteligencia Artificial",
+    "category": "Tecnología",
+    "type": "Libro",
+    "level": "Principiante",
+    "language": "Español",
+    "author": "María González",
+    "year": 2024,
+    "tags": [
+      "IA",
+      "Machine Learning",
+      "Tecnología"
+    ],
+    "description": "Fundamentos básicos de la inteligencia artificial y sus aplicaciones",
+    "hash": "a7b9c8d6e5f4321098765432109876543210987654321098765432109876543210",
+    "vectorstore_path": "data/processed_docs/Introducción a la Inteligencia Artificial",
+    "original_path": "data/processed_docs/Introducción a la Inteligencia Artificial/original_Introducción a la Inteligencia Artificial.pdf",
+    "processed_date": "2024-11-24T04:15:00.123456"
+  },
+  "b8c9d0e1f2g3456789012345678901234567890123456789012345678901234567": {
+    "title": "Química Orgánica Avanzada",
+    "category": "Ciencias",
+    "type": "Material de Laboratorio",
+    "level": "Avanzado",
+    "language": "Español",
+    "author": "Dr. Carlos Ramírez",
+    "year": 2023,
+    "tags": [
+      "Química",
+      "Laboratorio",
+      "Orgánica"
+    ],
+    "description": "Manual detallado de prácticas de laboratorio en química orgánica",
+    "hash": "b8c9d0e1f2g3456789012345678901234567890123456789012345678901234567",
+    "vectorstore_path": "data/processed_docs/Química Orgánica Avanzada",
+    "original_path": "data/processed_docs/Química Orgánica Avanzada/original_Química Orgánica Avanzada.pdf",
+    "processed_date": "2024-11-24T05:30:15.789012"
+  },
+  "c9d0e1f2g3h4567890123456789012345678901234567890123456789012345678": {
+    "title": "Marketing Digital y Redes Sociales",
+    "category": "Marketing",
+    "type": "Guía Práctica",
+    "level": "Intermedio",
+    "language": "Español",
+    "author": "Laura Martínez",
+    "year": 2024,
+    "tags": [
+      "Marketing Digital",
+      "Redes Sociales",
+      "Estrategia"
+    ],
+    "description": "Estrategias efectivas para marketing en plataformas digitales",
+    "hash": "c9d0e1f2g3h4567890123456789012345678901234567890123456789012345678",
+    "vectorstore_path": "data/processed_docs/Marketing Digital y Redes Sociales",
+    "original_path": "data/processed_docs/Marketing Digital y Redes Sociales/original_Marketing Digital y Redes Sociales.pdf",
+    "processed_date": "2024-11-24T06:45:30.456789"
+  },
+  "d0e1f2g3h4i5678901234567890123456789012345678901234567890123456789": {
+    "title": "Historia del Arte Contemporáneo",
+    "category": "Arte",
+    "type": "Manual Académico",
+    "level": "Avanzado",
+    "language": "Español",
+    "author": "Isabel Torres",
+    "year": 2023,
+    "tags": [
+      "Arte",
+      "Historia",
+      "Contemporáneo"
+    ],
+    "description": "Análisis de los movimientos artísticos del siglo XX y XXI",
+    "hash": "d0e1f2g3h4i5678901234567890123456789012345678901234567890123456789",
+    "vectorstore_path": "data/processed_docs/Historia del Arte Contemporáneo",
+    "original_path": "data/processed_docs/Historia del Arte Contemporáneo/original_Historia del Arte Contemporáneo.pdf",
+    "processed_date": "2024-11-24T07:20:45.123456"
+  },
+  "e1f2g3h4i5j6789012345678901234567890123456789012345678901234567890": {
+    "title": "Fundamentos de Economía Circular",
+    "category": "Economía",
+    "type": "Investigación",
+    "level": "Intermedio",
+    "language": "Español",
+    "author": "Ricardo Sánchez",
+    "year": 2024,
+    "tags": [
+      "Economía",
+      "Sostenibilidad",
+      "Medio Ambiente"
+    ],
+    "description": "Principios y aplicaciones de la economía circular en la industria moderna",
+    "hash": "e1f2g3h4i5j6789012345678901234567890123456789012345678901234567890",
+    "vectorstore_path": "data/processed_docs/Fundamentos de Economía Circular",
+    "original_path": "data/processed_docs/Fundamentos de Economía Circular/original_Fundamentos de Economía Circular.pdf",
+    "processed_date": "2024-11-24T08:10:00.789012"
+  },
+  "f2g3h4i5j6k7890123456789012345678901234567890123456789012345678901": {
+    "title": "Psicología del Aprendizaje",
+    "category": "Psicología",
+    "type": "Libro de Texto",
+    "level": "Principiante",
+    "language": "Español",
+    "author": "Ana López",
+    "year": 2024,
+    "tags": [
+      "Psicología",
+      "Educación",
+      "Aprendizaje"
+    ],
+    "description": "Teorías y métodos fundamentales del aprendizaje humano",
+    "hash": "f2g3h4i5j6k7890123456789012345678901234567890123456789012345678901",
+    "vectorstore_path": "data/processed_docs/Psicología del Aprendizaje",
+    "original_path": "data/processed_docs/Psicología del Aprendizaje/original_Psicología del Aprendizaje.pdf",
+    "processed_date": "2024-11-24T09:30:15.456789"
+  },
+  "912b204394aa66dcd2ed392eb432c223ef9979701297fa45c825fee0a1c51b52": {
+    "title": "Sociología La democracia",
+    "category": "Ciencias",
+    "type": "Material de Curso",
+    "level": "Principiante",
+    "language": "Español",
+    "author": "Fernando Ayala",
+    "year": 2024,
+    "tags": [],
+    "description": "",
+    "hash": "912b204394aa66dcd2ed392eb432c223ef9979701297fa45c825fee0a1c51b52",
+    "vectorstore_path": "data/processed_docs/Sociología La democracia",
+    "original_path": "data/processed_docs/Sociología La democracia/original_Sociología La democracia.pdf",
+    "processed_date": "2024-11-24T05:28:42.556688"
   }
 }
